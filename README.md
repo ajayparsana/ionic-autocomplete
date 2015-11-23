@@ -1,10 +1,10 @@
-[![bitHound Score](https://www.bithound.io/github/AjayParsana/ionic-datepicker/badges/score.svg)](https://www.bithound.io/github/AjayParsana/ionic-datepicker)
+[![bitHound Score](https://www.bithound.io/github/AjayParsana/ionic-autocomplete/badges/score.svg)](https://www.bithound.io/github/AjayParsana/ionic-autocomplete)
 
 ##Introduction:
 
-This is an `ionic-datepicker` bower component, which can be used in any Ionic framework's application. No additional plugins required for this component.
+This is an `ionic-autocomplete` bower component, which can be used in any Ionic framework's application. No additional plugins required for this component.
 
-[View Demo](http://AjayParsana.github.io/DatePickerForIonicFramework/demo/ "Demo")
+[View Demo](http://AjayParsana.github.io/autocompleteForIonicFramework/demo/ "Demo")
 
 ##Prerequisites.
 
@@ -17,17 +17,15 @@ This is an `ionic-datepicker` bower component, which can be used in any Ionic fr
  Directive is underdevelopment
 
 ##License:
-[MIT](https://github.com/AjayParsana/ionic-datepicker/blob/master/LICENSE.MD "MIT")
+[MIT](https://github.com/AjayParsana/ionic-autocomplete/blob/master/LICENSE.MD "MIT")
 
 ##Contact:
-gmail : Ajay.Parsana@gmail.com
+gmail : ajay.parsana@gmail.com
 
-github : https://github.com/AjayParsana
+github : https://github.com/ajayparsana
 
-twitter : https://twitter.com/Ajay_9032
+twitter : https://twitter.com/ajayparsana
 
-facebook : https://www.facebook.com/AjayParsana
+facebook : https://www.facebook.com/ajayParsana
 
 paypal : Ajay.Parsana@gmail.com
-
-Comment or Rate it : http://market.ionic.io/plugins/ionicdatepicker

@@ -1,7 +1,7 @@
 {
   "name": "ionic-autocomplete",
   "version": "0.9.0",
-  "description": "A date picker for IONIC framework",
+  "description": "A ionic autocomplete for IONIC framework",
   "main": [
     "./dist/ionic-autocomplete.bundle.min.js"
   ],
