@@ -8,12 +8,10 @@
   angular.module('ionic-autocomplete')
     .service('IonicAutoCompleteService', function ($q, $timeout) {
 
-        var searchString = function (searchFilter, list) {
-
-
+        var searchString = function (searchFilter, list) {  
             var deferred = $q.defer();
             var matches;
-            if (searchFilter) {
+            if (searchFilter && list) {
                 matches = list.filter(function (item) {
                     if (item.name.toLowerCase().indexOf(searchFilter.toLowerCase()) !== -1) return true;
                 });
@@ -37,4 +35,5 @@
             searchString: searchString
 
         }
-    })();
+    });
+})();

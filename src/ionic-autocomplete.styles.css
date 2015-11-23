@@ -1,0 +1,6 @@
+.popover {opacity: 1 !important;}
+.popover-backdrop.active{background-color: transparent !important}
+/*
+#autocomplete .item:last-child {
+    border-bottom-width: 1px !important;
+}*/
