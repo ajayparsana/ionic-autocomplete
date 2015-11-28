@@ -55,6 +55,12 @@ angular.module('mainModuleName', ['ionic', 'ionic-autocomplete']){
 **a) propNameToDisplay**(required) : if data source item has {'name':abc} then if you pass 'name' then 'abc' will be displayed on list
 
 **b) itemSelectCallback**(required) : function that need to be executed on item select. This can be used to set model as well
+ ````javascript
+ $scope.autocompleteInput.itemSelectCallback = function(item){
+   //use item object in controller for model seeting and other business logic
+ };
+ ````
+
 **C) searchlist**(required) : This list where search need to be performed to display matched result. If data is static and available then directly set this property. 
  1) If complete list is reterieved via API only once then on success of data reterieval set set data equal to this property and broadcast 'SearchListUpdated' event on rootscope
  ````javascript
