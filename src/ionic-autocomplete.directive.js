@@ -14,51 +14,66 @@
             restrict: 'AE',
 
             scope: {
-                inputObj: "=inputObj"
+                autocompleteInput: "=autocompleteInput"
             },
-            template: '<label class="item item-input bottom-border "><input id="searchAJ" type="text" class="" placeholder="Search" ng-change="search($event)" ng-model="searchData.search"><ion-spinner ng-show="loading"></ion-spinner></label>',
+            template: '<label class="item item-input" ng-class="autocompleteInput.labelContainerClass" style="margin-bottom: 1px;"><input id="searchAJ" type="text" ng-change="search($event)" ng-model="searchData.search" ng-class="autocompleteInput.textBoxClass"><ion-spinner ng-show="loading"></ion-spinner></label>',
+            transclude: true,
             link: function (scope, element, attrs) {
-
+                //this will make placeholder dynamic
+                var el = angular.element("#searchAJ");
+                el.attr("placeholder", (scope.autocompleteInput.placeholder ? scope.autocompleteInput.placeholder : 'Enter search text'));
                 scope.searchData = {};
-                scope.prop = scope.inputObj.prop? scope.inputObj.prop :'name';
-                scope.isAsync = scope.inputObj.isAsync ? true :false;
-                scope.list = scope.inputObj.list? scope.inputObj.list:null;
+
+                scope.prop = scope.autocompleteInput.propNameToDisplay ? scope.autocompleteInput.propNameToDisplay : 'name';
+                scope.isAsync = scope.autocompleteInput.isAsyncSearch ? true : false;
+                scope.list = scope.autocompleteInput.searchlist ? scope.autocompleteInput.searchlist : null;
                 scope.loading = false;
-               
+
                 //This will search using value in text box
                 var searchFoo = function () {
-                    IonicAutoCompleteService.searchString(scope.searchData.search, scope.list).then(
-                        function (matches) {
-                            scope.searchData.items = matches;
-                            if (scope.searchData.items.length > 0) {
-                                scope.searchData.hideList = true;
-                                var el = angular.element("#searchAJ");
-                                if (scope.popover)
-                                    scope.popover.remove();
-                                var template = '<ion-popover-view style="margin-left:0px;top:' + (el.offset().top + el.height()) + 'px;left:' + el.offset().left + 'px;"><ion-content id="autocomplete"><li class="item list-border-energized " ng-repeat="item in searchData.items" ng-click="searchData.search = item[prop];closePopover();" style="padding:5px">{{item[prop]}}</li></ion-content></ion-popover-view>';
+                        IonicAutoCompleteService.searchString(scope.searchData.search, scope.list).then(
+                            function (matches) {
+                                scope.searchData.items = matches;
+                                if (scope.searchData.items.length > 0) {
 
-                                scope.popover = $ionicPopover.fromTemplate(template, {
-                                    scope: scope
-                                });
 
-                                scope.popover.show();
-                            }
+                                    var template = '<ion-popover-view style="margin-left:0px;top:' + (el.offset().top + el.height()) + 'px;left:' + el.offset().left + 'px;"><ion-content id="autocomplete"><li class="item" ng-class= "autocompleteInput.listClass" ng-repeat="item in searchData.items" ng-click="searchData.search = item[prop];itemSelected(item);" style="padding:5px">{{item[prop]}}</li></ion-content></ion-popover-view>';
+                                    removePopup();
+                                    scope.popover = $ionicPopover.fromTemplate(template, {
+                                        scope: scope
+                                    });
+
+                                    scope.popover.show();
+                                } else {
+                                    removePopup();
+                                }
+                            });
+                    },
+                    removePopup = function () {
+                        if (scope.popover) {
+                            scope.popover.remove();
                         }
-                    )
-                };
+                    };
                 scope.search = function () {
-                    debugger;
-                    scope.searchData.hideList = true;
+
                     if (!scope.isAsync) {
-                        searchFoo()
+                        searchFoo();
                     } else {
-                        if(scope.inputObj.asyncHttpCall)
-                        scope.loading = true;
-                        scope.inputObj.asyncHttpCall(scope.searchData.search);
+                        if (scope.autocompleteInput.asyncHttpCall) {
+                            scope.loading = true;
+                        }
+                        scope.autocompleteInput.asyncHttpCall(scope.searchData.search);
                     }
-                    }
+
                 };
 
+
+                scope.itemSelected = function (item) {
+                    scope.closePopover();
+                    if (scope.autocompleteInput.itemSelectCallback) {
+                        scope.autocompleteInput.itemSelectCallback(item);
+                    }
+                };
                 scope.openPopover = function ($event) {
                     scope.popover.show($event);
                 };
@@ -80,17 +95,17 @@
                 //Called when the user clicks on the button to invoke the 'ionic-autocomplete'
 
                 scope.$root.$on('SearchListUpdated', function () {
-                    scope.list = scope.inputObj.list;
+                    scope.list = scope.autocompleteInput.searchlist;
                     if (scope.isAsync) {
-                         scope.loading = false;
+                        scope.loading = false;
                         searchFoo();
-                        
+
                     }
                 });
                 //                element.focus(function () {
                 //                    debugger;
                 //                    //This code is added to set passed date from autocompleteObject
-                //                    scope.list = scope.inputObj.list;
+                //                    scope.list = scope.autocompleteInput.searchlist;
                 //                });
             }
         };

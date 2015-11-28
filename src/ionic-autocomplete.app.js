@@ -4,6 +4,6 @@
 (function(){
   'use strict';
 
-  angular.module('ionic-autocomplete', ['ionic','ionic-autocomplete.templates']);
+  angular.module('ionic-autocomplete', ['ionic']);
   
 })();

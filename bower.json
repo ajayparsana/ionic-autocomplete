@@ -1,0 +1,30 @@
+{
+  "name": "ionic-autocomplete",
+  "version": "0.9.0",
+  "authors": [
+    "AjayParsana <Ajay.Parsana@gmail.com>"
+  ],
+  "description": "A ionic autocomplete component for ionic framework",
+  "main": [
+    "./dist/ionic-autocomplete.bundle.min.js"
+  ],
+  "keywords": [
+    "ionic-autocomplete",
+    "ionic",
+    "autocomplete",
+    "autocomplete for ionic",
+    "autocomplete for ionic framework"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/AjayParsana",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ionic": ">=0.9.27"
+  }
+}

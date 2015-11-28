@@ -6,7 +6,7 @@
   'use strict';
 
   angular.module('ionic-autocomplete')
-    .service('IonicAutoCompleteService', function ($q, $timeout) {
+    .service('IonicAutoCompleteService', ['$q', '$timeout',function ($q, $timeout) {
 
         var searchString = function (searchFilter, list) {  
             var deferred = $q.defer();
@@ -35,5 +35,5 @@
             searchString: searchString
 
         }
-    });
+    }]);
 })();
