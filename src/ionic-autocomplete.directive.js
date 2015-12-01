@@ -16,12 +16,18 @@
             scope: {
                 autocompleteInput: "=autocompleteInput"
             },
-            template: '<label class="item item-input" ng-class="autocompleteInput.labelContainerClass" style="margin-bottom: 1px;"><input id="searchAJ" type="text" ng-change="search($event)" ng-model="searchData.search" ng-class="autocompleteInput.textBoxClass"><ion-spinner ng-show="loading"></ion-spinner></label>',
+            template: '<label class="item item-input" ng-class="autocompleteInput.labelContainerClass" style="margin-bottom: 1px;"><input id="searchAJ" type="text" ng-change="search(searchData.search)" ng-model="searchData.search" ng-class="autocompleteInput.textBoxClass"><ion-spinner ng-show="loading"></ion-spinner></label>',
             transclude: true,
             link: function (scope, element, attrs) {
                 //this will make placeholder dynamic
-                var el = angular.element("#searchAJ");
-                el.attr("placeholder", (scope.autocompleteInput.placeholder ? scope.autocompleteInput.placeholder : 'Enter search text'));
+                if(!scope.autocompleteInput.ID || !scope.autocompleteInput.propNameToDisplay || !scope.autocompleteInput.itemSelectCallback || (scope.autocompleteInput.isAsyncSearch && !scope.autocompleteInput.asyncHttpCall))
+                {
+                    alert('Required attributes are missing for autocomplete directive!!!');
+                    return;
+                }
+                element.find('INPUT').attr('id',scope.autocompleteInput.ID);
+                var el = document.getElementById(scope.autocompleteInput.ID);
+                el.setAttribute("placeholder", (scope.autocompleteInput.placeholder ? scope.autocompleteInput.placeholder : 'Enter search text'));
                 scope.searchData = {};
 
                 scope.prop = scope.autocompleteInput.propNameToDisplay ? scope.autocompleteInput.propNameToDisplay : 'name';
@@ -37,7 +43,7 @@
                                 if (scope.searchData.items.length > 0) {
 
 
-                                    var template = '<ion-popover-view style="margin-left:0px;top:' + (el.offset().top + el.height()) + 'px;left:' + el.offset().left + 'px;"><ion-content id="autocomplete"><li class="item" ng-class= "autocompleteInput.listClass" ng-repeat="item in searchData.items" ng-click="searchData.search = item[prop];itemSelected(item);" style="padding:5px">{{item[prop]}}</li></ion-content></ion-popover-view>';
+                                    var template = '<ion-popover-view style="margin-left:0px;top:' + (el.getClientRects()[0].top + (el.getClientRects()[0].height - 5 ) ) + 'px;left:' + el.parentElement.getClientRects()[0].left + 'px;"><ion-content id="autocomplete"><li class="item" ng-class= "autocompleteInput.listClass" ng-repeat="item in searchData.items" ng-click="searchData.search = item[prop];itemSelected(item);" style="padding:5px">{{item[prop]}}</li></ion-content></ion-popover-view>';
                                     removePopup();
                                     scope.popover = $ionicPopover.fromTemplate(template, {
                                         scope: scope
@@ -93,8 +99,8 @@
                 //    // Execute action
                 //  });
                 //Called when the user clicks on the button to invoke the 'ionic-autocomplete'
-
-                scope.$root.$on('SearchListUpdated', function () {
+              
+                scope.$root.$on(scope.autocompleteInput.ID, function () {
                     scope.list = scope.autocompleteInput.searchlist;
                     if (scope.isAsync) {
                         scope.loading = false;
