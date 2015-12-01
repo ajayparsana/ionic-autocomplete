@@ -39,6 +39,7 @@ angular.module('mainModuleName', ['ionic', 'ionic-autocomplete']){
     $scope.autocompleteInput = {
       
       'propNameToDisplay': 'name',
+      'ID':'AutoComplete',
       'itemSelectCallback' : foo , 
       'searchlist' : {}, // list where search needs to be done.
       'isAsyncSearch': false, // optional - Default :False
@@ -50,9 +51,13 @@ angular.module('mainModuleName', ['ionic', 'ionic-autocomplete']){
     };
     //Note: Don't forget to replace dummy values
 ````
-**$scope.autocompleteInput** is the main object, that we need to pass to the directive. The properties of this object are as follows:
+**$scope.autocompleteInput** is the main object, that we need to pass to the directive. **If any of the required property is missing then user will be prompted with message and directive will not work**
 
-**a) propNameToDisplay**(required) : if data source item has {'name':abc} then if you pass 'name' then 'abc' will be displayed on list
+The properties of this object are as follows:
+
+**a1) propNameToDisplay**(required) : if data source item has {'name':abc} then if you pass 'name' then 'abc' will be displayed on list
+
+**a1) ID**(required) : Unique ID to identify search box and register broadcast event on rootscope, This is very helpful to have more than one autocomplete box
 
 **b) itemSelectCallback**(required) : function that need to be executed on item select. This can be used to set model as well
  ````javascript
@@ -62,12 +67,12 @@ angular.module('mainModuleName', ['ionic', 'ionic-autocomplete']){
  ````
 
 **C) searchlist**(required) : This list where search need to be performed to display matched result. If data is static and available then directly set this property. 
- 1) If complete list is reterieved via API only once then on success of data reterieval set set data equal to this property and broadcast 'SearchListUpdated' event on rootscope
+ 1) If complete list is reterieved via API only once then on success of data reterieval set set data equal to this property and broadcast $scope.autocompleteInputAsync.ID event on rootscope
  ````javascript
  $scope.autocompleteInput.searchlist = reterieved list;
- $scope.$root.$broadcast('SearchListUpdated');
+ $scope.$root.$broadcast($scope.autocompleteInputAsync.ID);
  ````
- 2) If list is reterieved via API on each key press then set **isAsyncSearch** to **true**  and write function to make http call and pass refrence to **asyncHttpCall** & on success of data reterieval set data equal to this  property and broadcast 'SearchListUpdated' event on rootscope
+ 2) If list is reterieved via API on each key press then set **isAsyncSearch** to **true**  and write function to make http call and pass refrence to **asyncHttpCall** & on success of data reterieval set data equal to this  property and broadcast $scope.autocompleteInputAsync.ID event on rootscope
  ````javascript
          $scope.asyncSearch = function () {
             //use get or post depending on your implementation
@@ -75,24 +80,24 @@ angular.module('mainModuleName', ['ionic', 'ionic-autocomplete']){
                 function (response) {
                     //Success
                     $scope.autocompleteInput.searchlist = reterieved list;
-                    $scope.$root.$broadcast('SearchListUpdated');
+                    $scope.$root.$broadcast($scope.autocompleteInputAsync.ID);
                 },
                 function (response) {
                     //Failure
                     $scope.autocompleteInput.searchlist = null;
-                    $scope.$root.$broadcast('SearchListUpdated');
+                    $scope.$root.$broadcast($scope.autocompleteInputAsync.ID);
                 });
             or
             $http.post().then(
                 function (response) {
                     //Success
                     $scope.autocompleteInput.searchlist = reterieved list;
-                    $scope.$root.$broadcast('SearchListUpdated');
+                    $scope.$root.$broadcast($scope.autocompleteInputAsync.ID);
                 },
                 function (response) {
                     //Failure
                     $scope.autocompleteInput.searchlist = null;
-                    $scope.$root.$broadcast('SearchListUpdated');
+                    $scope.$root.$broadcast($scope.autocompleteInputAsync.ID);
                 });
         }
 
