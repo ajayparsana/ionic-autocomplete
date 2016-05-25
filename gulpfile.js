@@ -29,7 +29,7 @@ gulp.task('make-bundle', ['del', 'css2js'], function () {
     .pipe(concat('ionic-autocomplete.bundle.min.js'))
         .pipe(uglify())
     .pipe(gulp.dest('dist/'));
-    //.pipe(gulp.dest('D:/MyWork/Zeg2/School Bus Tracker - Zeg/ZegBusTracker/www/js/'));
+    
 });
 
 gulp.task('del-temp-files', ['make-bundle'], function () {

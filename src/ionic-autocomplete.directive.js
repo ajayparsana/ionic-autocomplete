@@ -51,7 +51,13 @@
 
                                     scope.popover.show();
                                 } else {
+                                    try {
                                     removePopup();
+                                    scope.searchData.search = scope.searchData.search;
+                                    scope.itemSelected(scope.searchData.search);
+                                    }
+                                    catch (e)
+                                        {console.log(e);}
                                 }
                             });
                     },
@@ -84,11 +90,13 @@
                     scope.popover.show($event);
                 };
                 scope.closePopover = function () {
-                    scope.popover.hide();
+                    if(scope.popover)
+                        scope.popover.hide();
                 };
                 //Cleanup the popover when we're done with it!
                 scope.$on('$destroy', function () {
-                    scope.popover.remove();
+                    if(scope.popover)
+                        scope.popover.remove();
                 });
                 //  // Execute action on hide popover
                 // scope.$on('popover.hidden', function() {
