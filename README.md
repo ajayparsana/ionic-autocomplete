@@ -21,7 +21,7 @@ And of course ionic-autocomplete itself is open source  on [GitHub](https://gith
 ### Installation
 
  1. Download `ionic-autocomplete.bundle.min.js` file from [GitHub](https://github.com/ajayparsana/ionic-autocomplete/archive/master.zip) 
- 2. Copy `dist/ionic-autocomplete.bundle.min.js` into your JS lib folder and give pathe in `index.html`
+ 2. Copy `dist/ionic-autocomplete.bundle.min.js` into your JS lib folder and give path in `index.html`
 
 ````html
 <!-- path to ionic/angularjs -->
