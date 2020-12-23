@@ -1,3 +1,4 @@
+### I am no longer actively supporting this since Ionic has upgraded framework.
 ionic-autocomplete
 ===================
 
